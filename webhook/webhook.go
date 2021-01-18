@@ -1,14 +1,14 @@
 package webhook
 
-import (
-	e "../executor"
-)
+//e "../executor"
 
 // Webhook interface definition
 type Webhook interface {
 	SetPayload(payload string)
 	ParsePayload() error
 	PrintPayload()
-	Execute(ex *e.Executor) error
-	Init(ex *e.Executor) error
+	Init() error
+	GetParmVal(parm string) string
+	AddExecutable(cmd string, logic string)
+	LogicTest() error
 }

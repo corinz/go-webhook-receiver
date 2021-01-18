@@ -9,18 +9,28 @@ import (
 
 // Executor struct
 type Executor struct {
+	// Usage: single word executable statements or executable files only
 	Executables []string
+	// Usage: myParameter "{eq,ne,lt,gt}" <string> OR <int>
+	LogicTests []string
+	// Usage: Corresponds to active/inactive executables. 0=disabled, 1=enabled
+	TestEnabled []int
 }
 
 // Add Executable, file or 0 arg command
-func (e *Executor) AddExecutable(cmd string) {
+func (e *Executor) Add(cmd string, logic string) {
 	e.Executables = append(e.Executables, cmd)
 }
 
 // Execute array or commands/files preprended with /bin/bash -c
 func (e *Executor) Execute() error {
+
 	//for loop and os call on Executables
-	for _, v := range e.Executables {
+	for i, v := range e.Executables {
+		if e.TestEnabled[i] == 0 {
+			continue // skip disabled tests
+		}
+
 		cmdArr := strings.Split(v, " ")
 
 		// /bin/bash -c ...
