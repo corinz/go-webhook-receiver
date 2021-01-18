@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	jwh "./jsonunstruc"
+	e "./executor"
 	wh "./webhook"
 )
 
@@ -21,7 +21,8 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // http://../webhooks
-func webhookHandler(wh wh.Webhook) func(http.ResponseWriter, *http.Request) {
+// Receives any Webhook implementation and Executor struct
+func webhookHandler(wh wh.Webhook, ex *e.Executor) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		// Get request body
@@ -33,7 +34,7 @@ func webhookHandler(wh wh.Webhook) func(http.ResponseWriter, *http.Request) {
 
 		// Set payload, init webhook methods
 		wh.SetPayload(buf.String())
-		if err := wh.Init(); err != nil {
+		if err := wh.Init(ex); err != nil {
 			errors.New("something went wrong with payload init") // TODO need to handle error
 		}
 	}
@@ -41,13 +42,24 @@ func webhookHandler(wh wh.Webhook) func(http.ResponseWriter, *http.Request) {
 
 func main() {
 
-	// TO DO
-	// detect type of incoming payload, create struct
-	var incomingWH *jwh.JSONWebhook
-	incomingWH = new(jwh.JSONWebhook)
+	// Create jsonwebhook
+	var incomingWH *JSONWebhook
+	incomingWH = new(JSONWebhook)
 
+	// Create execution list
+	var executeList *e.Executor
+	executeList = new(e.Executor)
+
+	// Add executables
+	executeList.AddExecutable("whoami")
+	executeList.AddExecutable("date")
+
+	//TODO: add testing logic,
+	// if parm == != > < value then execute
+
+	// Pass webhook and executable to handler
 	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/webhooks", webhookHandler(incomingWH))
+	http.HandleFunc("/webhooks", webhookHandler(incomingWH, executeList))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 

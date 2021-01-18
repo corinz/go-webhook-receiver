@@ -2,11 +2,13 @@
 /* Unstuctured JSON Webhook Implementation */
 /////////////////////////////////////////////
 
-package jsonunstruc
+package main
 
 import (
 	"encoding/json"
 	"fmt"
+
+	e "./executor"
 )
 
 // JSONWebhook Unstructured JSON Data
@@ -34,17 +36,19 @@ func (wh *JSONWebhook) PrintPayload() {
 }
 
 // Executes webhook actions
-func (wh *JSONWebhook) Execute() error {
+func (wh *JSONWebhook) Execute(ex *e.Executor) error {
 	fmt.Println("Executing webhook...")
+	ex.Print()
+	ex.Execute()
 	return nil
 }
 
 // Initializes
-func (wh *JSONWebhook) Init() error {
+func (wh *JSONWebhook) Init(ex *e.Executor) error {
 	if err := wh.ParsePayload(); err != nil {
 		return err
 	}
-	if err := wh.Execute(); err != nil {
+	if err := wh.Execute(ex); err != nil {
 		return err
 	}
 
