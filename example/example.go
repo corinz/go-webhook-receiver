@@ -4,16 +4,14 @@ import wh "../webhook"
 
 func main() {
 
-	// Create jsonwebhook
-	var incomingWH *wh.JSONWebhook
-	incomingWH = new(wh.JSONWebhook)
+	// Execute 'date' when the authors email is lolwut@noway.biz
+	wh.ExecuteThisWhen("date", "commits.0.author.email eq lolwut@noway.biz")
 
-	// Execute when logic test passes
-	incomingWH.AddExecutable("whoami", "after eq 1481a2de7b2a7d02428ad93446ab166be7793fbb")
-	incomingWH.AddExecutable("date", "commits.0.author.email eq lolwut@noway.biz")
-	incomingWH.AddExecutable("uname", "commits.1.committer.username eq octokitty")
+	// More logical tests
+	wh.ExecuteThisWhen("whoami", "after eq 1481")
+	wh.ExecuteThisWhen("uname", "commits.1.committer.username eq octokitty")
 
 	// Start web server on http://localhost:8080/
-	wh.Startup(incomingWH)
+	wh.Startup()
 
 }

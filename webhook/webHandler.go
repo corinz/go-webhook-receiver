@@ -8,6 +8,8 @@ import (
 	"net/http"
 )
 
+var wh JSONWebhook
+
 // http://../
 // webhookHandler Receives any Webhook implementation
 func webhookHandler(wh Webhook) func(http.ResponseWriter, *http.Request) {
@@ -29,7 +31,12 @@ func webhookHandler(wh Webhook) func(http.ResponseWriter, *http.Request) {
 }
 
 // Startup takes webhook argument, starts local host server on port 8080
-func Startup(wh Webhook) {
-	http.HandleFunc("/", webhookHandler(wh))
+func Startup() {
+	http.HandleFunc("/", webhookHandler(&wh))
 	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+// ExecuteThisWhen
+func ExecuteThisWhen(this string, when string) {
+	wh.AddExecutable(this, when)
 }

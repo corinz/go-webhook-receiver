@@ -110,5 +110,6 @@ func (wh *JSONWebhook) LogicTest() {
 		default:
 			fmt.Println("Error: The logical operator, \"", logArr[1], "\" is invalid. Please use: eq, ne, lt, gt")
 		}
+		fmt.Println()
 	}
 }
