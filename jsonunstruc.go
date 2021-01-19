@@ -28,10 +28,6 @@ func (wh *JSONWebhook) SetPayload(payload string) {
 
 // Init Initializes the webhook
 func (wh *JSONWebhook) Init() error {
-	// Parse Payload
-	if err := wh.ParsePayload(); err != nil {
-		return err
-	}
 	// Evaluates logical tests and adds them to executor struct
 	wh.LogicTest()
 

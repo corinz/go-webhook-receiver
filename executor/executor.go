@@ -7,13 +7,13 @@ import (
 	"strings"
 )
 
-// Executor struct
+// Executor struct executes stores arrays of execution info
+//  Executables []string | Usage: single word executable statements or executable files only
+//  LogicTests []string  | Usage: myParameter "{eq,ne,lt,gt}" <string> OR <int>
+//  TestEnabled []int    | Usage: Corresponds to active/inactive executables. 0=disabled, 1=enabled */
 type Executor struct {
-	// Usage: single word executable statements or executable files only
 	Executables []string
-	// Usage: myParameter "{eq,ne,lt,gt}" <string> OR <int>
-	LogicTests []string
-	// Usage: Corresponds to active/inactive executables. 0=disabled, 1=enabled
+	LogicTests  []string
 	TestEnabled []int
 }
 
