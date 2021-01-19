@@ -2,23 +2,20 @@
 /* Unstuctured JSON Webhook Implementation */
 /////////////////////////////////////////////
 
-package main
+package webhook
 
 import (
 	"fmt"
 	"strconv"
 	"strings"
 
-	"./executor"
 	"github.com/tidwall/gjson"
 )
 
 // JSONWebhook Unstructured JSON Data
 type JSONWebhook struct {
 	Payload string
-
-	// Executor struct does os execution
-	ex executor.Executor
+	ex      Executor
 }
 
 // SetPayload accepts (payload string)
@@ -28,7 +25,6 @@ func (wh *JSONWebhook) SetPayload(payload string) {
 
 // Init Initializes the webhook
 func (wh *JSONWebhook) Init() error {
-	// Evaluates logical tests and adds them to executor struct
 	wh.LogicTest()
 
 	// Executes all enabled logical tests

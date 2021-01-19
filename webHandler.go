@@ -1,4 +1,4 @@
-package main
+package webhook
 
 import (
 	"bytes"
@@ -6,18 +6,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	wh "./webhook"
 )
 
 // http://../
-func rootHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Webhook address: /webhooks")
-}
-
-// http://../
 // webhookHandler Receives any Webhook implementation
-func webhookHandler(wh wh.Webhook) func(http.ResponseWriter, *http.Request) {
+func webhookHandler(wh Webhook) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		// Get request body
@@ -35,8 +28,8 @@ func webhookHandler(wh wh.Webhook) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
-// Startup
-func Startup(wh wh.Webhook) {
+// Startup takes webhook argument, starts local host server on port 8080
+func Startup(wh Webhook) {
 	http.HandleFunc("/", webhookHandler(wh))
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
