@@ -5,7 +5,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -16,8 +15,7 @@ import (
 
 // JSONWebhook Unstructured JSON Data
 type JSONWebhook struct {
-	Payload        string
-	DecodedPayload map[string]interface{}
+	Payload string
 
 	// Executor struct does os execution
 	ex executor.Executor
@@ -26,20 +24,6 @@ type JSONWebhook struct {
 // SetPayload accepts (payload string)
 func (wh *JSONWebhook) SetPayload(payload string) {
 	wh.Payload = payload
-}
-
-// ParsePayload Receives Webhook struct, parses json payload
-func (wh *JSONWebhook) ParsePayload() error {
-	err := json.Unmarshal([]byte(wh.Payload), &wh.DecodedPayload)
-	return err
-}
-
-// PrintPayload Prints decoded payload
-func (wh *JSONWebhook) PrintPayload() {
-	// for k, v := range wh.DecodedPayload {
-	// 	fmt.Println(k, ": ", v)
-	// }
-	fmt.Println(wh.Payload)
 }
 
 // Init Initializes the webhook
@@ -56,7 +40,6 @@ func (wh *JSONWebhook) Init() error {
 		return err
 	}
 
-	//wh.PrintPayload()
 	return nil
 }
 
