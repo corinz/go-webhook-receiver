@@ -8,6 +8,19 @@ A general purpose Golang application that receives POST requests, performs logic
 2. `cd example; go run .`
 3. In another terminal `cd payload-test; go run .`
 
+## Example
+```
+package main
+import wh "../webhook"
+
+func main() {
+	// Execute 'date' when the authors email is lolwut@noway.biz
+	wh.ExecuteThisWhen("date", "commits.0.author.email eq lolwut@noway.biz")
+
+	// Start web server on http://localhost:8080/
+	wh.Startup()
+}
+```
 
 ## Diagram
 
