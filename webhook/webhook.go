@@ -10,5 +10,5 @@ type Webhook interface {
 	Init() error
 	GetParmVal(parm string) string
 	AddExecutable(cmd string, logic string)
-	LogicTest() error
+	LogicTest()
 }
