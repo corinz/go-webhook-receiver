@@ -1,6 +1,6 @@
 # Go Webhook Receiver
 
-A general purpose Golang application that receives POST requests, performs logical tests on the incoming payload's parameters and makes OS executions.
+A general purpose Golang application that receives POST requests, performs logical tests on the incoming payload's parameters and makes OS executions following successful tests.
 
 
 ## Quick start
