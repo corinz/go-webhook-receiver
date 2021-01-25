@@ -9,18 +9,7 @@ A general purpose Golang application that receives POST requests, performs logic
 3. In another terminal `cd payload-test; go run .`
 
 ## Example
-```
-package main
-import wh "../webhook"
-
-func main() {
-	// Execute 'date' when the authors email is lolwut@noway.biz
-	wh.ExecuteThisWhen("date", "commits.0.author.email eq lolwut@noway.biz")
-
-	// Start web server on http://localhost:8080/
-	wh.Startup()
-}
-```
+See https://github.com/corinz/go-webhook-receiver/blob/dev/example/example.go
 
 ## Diagram
 
@@ -32,7 +21,8 @@ D -- TestPassed --> E(OS Execution)
 ```
 ## Developing with go-webhook-receiver
 
-Import the project `import "github.com/corinz/go-webhook-receiver"`
+Import the project 
+`import "github.com/corinz/go-webhook-receiver"`
 
 
 ## Logical Tests
