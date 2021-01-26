@@ -8,6 +8,8 @@ import (
 	"net/http"
 )
 
+var exArr [][]string
+
 // http://../
 // webhookHandler Receives any Webhook implementation
 func webhookHandler(exArr [][]string) func(http.ResponseWriter, *http.Request) {
@@ -38,7 +40,13 @@ func webhookHandler(exArr [][]string) func(http.ResponseWriter, *http.Request) {
 }
 
 // Startup takes webhook argument, starts local host server on port 8080
-func Startup(exArr [][]string) {
+func Startup() {
 	http.HandleFunc("/", webhookHandler(exArr))
 	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+// ExecuteThisWhen helper method for building an arr of executable statements
+func ExecuteThisWhen(this string, when string) {
+	exStatement := []string{this, when}
+	exArr = append(exArr, exStatement)
 }
