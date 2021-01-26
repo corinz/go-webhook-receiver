@@ -5,7 +5,7 @@ package webhook
 // Webhook interface definition
 type Webhook interface {
 	SetPayload(payload string)
-	Init() error
+	Init(payload string) error
 	GetParmVal(parm string) string
 	AddExecutable(cmd string, logic string)
 	LogicTest()

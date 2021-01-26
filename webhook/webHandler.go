@@ -2,8 +2,6 @@ package webhook
 
 import (
 	"bytes"
-	"errors"
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -25,15 +23,9 @@ func webhookHandler(w http.ResponseWriter, r *http.Request) {
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(r.Body)
 
-	// Write request to response writer
-	fmt.Fprintf(w, "Incoming payload: %v", buf.String())
-
 	// Set payload, init webhook methods
-	// TODO set the payload in the init method
-	wh.SetPayload(buf.String())
-	if err := wh.Init(); err != nil {
-		errors.New("something went wrong with payload init") // TODO need to handle error
-
+	if err := wh.Init(buf.String()); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 }
 
