@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	url := "http://localhost:8080/webhooks"
+	url := "http://localhost:8080"
 	fmt.Println("URL:>", url)
 
 	// Testing unstruc data
