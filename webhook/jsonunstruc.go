@@ -5,6 +5,7 @@
 package webhook
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -24,8 +25,13 @@ func (wh *JSONWebhook) SetPayload(payload string) {
 }
 
 // Init Initializes the webhook
-func (wh *JSONWebhook) Init() error {
-	wh.LogicTest()
+func (wh *JSONWebhook) Init(payload string) error {
+	wh.SetPayload(payload)
+
+	// Logic test
+	if err := wh.LogicTest(); err != nil {
+		return err
+	}
 
 	// Executes all enabled logical tests
 	if err := wh.ex.Execute(); err != nil {
@@ -52,7 +58,7 @@ func (wh *JSONWebhook) AddExecutable(cmd string, logic string) {
 }
 
 // LogicTest runs all tests and enables/disables tests
-func (wh *JSONWebhook) LogicTest() {
+func (wh *JSONWebhook) LogicTest() error {
 	for i, v := range wh.ex.LogicTests {
 		logArr := strings.Split(v, " ")
 		fmt.Println("Logical statement array: ", logArr)
@@ -81,10 +87,12 @@ func (wh *JSONWebhook) LogicTest() {
 			pVal, err := strconv.Atoi(wh.GetParmVal(logArr[0]))
 			if err != nil {
 				fmt.Println(err)
+				break
 			}
 			tVal, err := strconv.Atoi(logArr[2])
 			if err != nil {
 				fmt.Println(err)
+				break
 			}
 			if pVal < tVal {
 				wh.ex.TestEnabled[i] = 1
@@ -97,10 +105,12 @@ func (wh *JSONWebhook) LogicTest() {
 			pVal, err := strconv.Atoi(wh.GetParmVal(logArr[0]))
 			if err != nil {
 				fmt.Println(err)
+				break
 			}
 			tVal, err := strconv.Atoi(logArr[2])
 			if err != nil {
 				fmt.Println(err)
+				break
 			}
 			if pVal > tVal {
 				wh.ex.TestEnabled[i] = 1
@@ -108,8 +118,10 @@ func (wh *JSONWebhook) LogicTest() {
 				wh.ex.TestEnabled[i] = 0
 			}
 		default:
-			fmt.Println("Error: The logical operator, \"", logArr[1], "\" is invalid. Please use: eq, ne, lt, gt")
+			err := errors.New("The logical operator is invalid. Please use: eq, ne, lt, gt")
+			return err
 		}
-		fmt.Println()
 	}
+	return nil
+
 }
