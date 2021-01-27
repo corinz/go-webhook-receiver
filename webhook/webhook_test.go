@@ -47,7 +47,7 @@ func makeJSONRequest() error {
 }
 
 func TestWebhandler(t *testing.T) {
-	ExecuteThisWhen("uname", "commits.1.committer.username e octokitty")
+	ExecuteThisWhen("whoami", "6 gt 1481a2de7b2a7d02428ad93446ab166be7793fbb")
 	go Startup()
 	err := makeJSONRequest()
 	if err != nil {
