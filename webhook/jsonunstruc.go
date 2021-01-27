@@ -1,7 +1,3 @@
-/////////////////////////////////////////////
-/* Unstuctured JSON Webhook Implementation */
-/////////////////////////////////////////////
-
 package webhook
 
 import (
@@ -27,8 +23,6 @@ func (wh *JSONWebhook) SetPayload(payload string) {
 func (wh *JSONWebhook) Init(payload string) {
 	wh.SetPayload(payload)
 	wh.LogicTest()
-
-	// Executes all enabled logical tests
 	wh.ex.Execute()
 }
 

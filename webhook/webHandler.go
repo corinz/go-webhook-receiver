@@ -28,8 +28,8 @@ func webhookHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Startup takes webhook argument, starts local host server on port 8080
-func Startup() {
-	http.HandleFunc("/", webhookHandler)
+func Startup(path string) {
+	http.HandleFunc(path, webhookHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 

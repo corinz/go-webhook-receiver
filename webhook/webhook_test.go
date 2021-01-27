@@ -9,9 +9,9 @@ import (
 	"testing"
 )
 
-func makeJSONRequest() error {
+func makeJSONRequest(path string) error {
 	// Localhost testing
-	url := "http://localhost:8080"
+	url := "http://localhost:8080" + path
 
 	// Testing unstruc data sample
 	data, err := ioutil.ReadFile("./example-payload")
@@ -47,9 +47,9 @@ func makeJSONRequest() error {
 }
 
 func TestWebhandler(t *testing.T) {
-	ExecuteThisWhen("whoami", "6 gt 1481a2de7b2a7d02428ad93446ab166be7793fbb")
-	go Startup()
-	err := makeJSONRequest()
+	ExecuteThisWhen("whoami", "6 eq 1481a2de7b2a7d02428ad93446ab166be7793fbb")
+	go Startup("/test")
+	err := makeJSONRequest("/test")
 	if err != nil {
 		t.Fatalf(`Error: %v`, err)
 	}
