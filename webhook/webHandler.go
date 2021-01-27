@@ -8,8 +8,6 @@ import (
 
 var exArr [][]string
 
-// http://../
-// webhookHandler Receives any Webhook implementation
 func webhookHandler(w http.ResponseWriter, r *http.Request) {
 	var wh *JSONWebhook
 	wh = new(JSONWebhook)
@@ -27,7 +25,7 @@ func webhookHandler(w http.ResponseWriter, r *http.Request) {
 	wh.Init(buf.String())
 }
 
-// Startup takes webhook argument, starts local host server on port 8080
+// Startup accepts subpath as "/subpath"
 func Startup(path string) {
 	http.HandleFunc(path, webhookHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))

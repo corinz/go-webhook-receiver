@@ -1,7 +1,5 @@
 package webhook
 
-//e "../executor"
-
 // Webhook interface definition
 type Webhook interface {
 	SetPayload(payload string)
