@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	url := "http://localhost:8080"
+	url := "http://localhost:8080/example"
 	fmt.Println("URL:>", url)
 
 	// Testing unstruc data

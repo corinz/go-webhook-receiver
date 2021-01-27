@@ -12,6 +12,6 @@ func main() {
 	wh.ExecuteThisWhen("uname", "commits.1.committer.username eq octokitty")
 
 	// Start web server on http://localhost:8080/
-	wh.Startup()
+	wh.Startup("/example")
 
 }
