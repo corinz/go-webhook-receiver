@@ -1,6 +1,6 @@
 # Go Webhook Receiver
 
-A general purpose Golang application that receives POST requests, performs logical tests on the incoming payload's parameters and makes OS executions.
+A general purpose Golang application that receives POST requests, performs logical tests on the incoming payload's parameters and makes OS executions following successful tests.
 
 
 ## Quick start
@@ -10,15 +10,18 @@ A general purpose Golang application that receives POST requests, performs logic
 
 ## Example
 ```
-package main
-import wh "../webhook"
-
 func main() {
+
 	// Execute 'date' when the authors email is lolwut@noway.biz
 	wh.ExecuteThisWhen("date", "commits.0.author.email eq lolwut@noway.biz")
 
+	// More logical tests
+	wh.ExecuteThisWhen("whoami", "after eq 1481")
+	wh.ExecuteThisWhen("uname", "commits.1.committer.username eq octokitty")
+
 	// Start web server on http://localhost:8080/
-	wh.Startup()
+	wh.Startup("/example")
+
 }
 ```
 
@@ -32,7 +35,8 @@ D -- TestPassed --> E(OS Execution)
 ```
 ## Developing with go-webhook-receiver
 
-Import the project `import "github.com/corinz/go-webhook-receiver"`
+Import the project 
+`import "github.com/corinz/go-webhook-receiver"`
 
 
 ## Logical Tests

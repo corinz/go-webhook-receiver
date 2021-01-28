@@ -2,6 +2,7 @@ package webhook
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -23,7 +24,7 @@ func (e *Executor) Add(cmd string, logic string) {
 }
 
 // Execute array or commands/files preprended with /bin/bash -c
-func (e *Executor) Execute() error {
+func (e *Executor) Execute() {
 
 	//for loop and os call on Executables
 	for i, v := range e.Executables {
@@ -38,11 +39,9 @@ func (e *Executor) Execute() error {
 		cmd.Stderr = os.Stderr
 
 		if err := cmd.Run(); err != nil {
-			fmt.Println("Error: ", err)
-			return err
+			log.Println(err)
 		}
 	}
-	return nil
 }
 
 // Print executable files, or commands
